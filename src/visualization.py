@@ -1,10 +1,10 @@
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
+from matplotlib.animation import FuncAnimation, FFMpegWriter
 import numpy as np
 from trajectory_generation import generate_straight_line_trajectory
 from robot_kinematics import forward_kinematics_two_link
 
-def visualize_tracking_with_arm(target_trajectory, actual_positions, joint_angles, l1=1.0, l2=1.0, interval=50, debug=False):
+def visualize_tracking_with_arm(target_trajectory, actual_positions, joint_angles, l1=1.0, l2=1.0, interval=50, debug=False, save_path=None):
     """
     动态可视化轨迹追踪，包括两连杆的运动和末端执行器轨迹。
     
@@ -68,6 +68,13 @@ def visualize_tracking_with_arm(target_trajectory, actual_positions, joint_angle
         return actual_line, end_effector, link1_line, link2_line, text
 
     ani = FuncAnimation(fig, update, frames=len(actual_positions), interval=interval, blit=True)
+
+    if save_path:
+        # 使用 matplotlib 的 FFMpegWriter 保存 MP4
+        writer = FFMpegWriter(fps=1000 // interval, metadata={'title': 'Trajectory Animation'})
+        ani.save(save_path, writer=writer)
+        print(f"动画已保存到 {save_path}")
+
     plt.legend()
     plt.show()
 

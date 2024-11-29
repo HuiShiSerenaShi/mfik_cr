@@ -44,7 +44,7 @@ def forward_kinematics_two_link(theta1, theta2, l1=1.0, l2=1.0):
     return T[:3, 3]  # 提取末端位置 (x, y, z)
 
 
-def jacobian_3d(angles):
+def true_jacobian(angles):
     """
     计算两连杆机械臂在三维空间中的雅可比矩阵 (6x2)。
     包括线速度和角速度部分。
@@ -149,5 +149,5 @@ if __name__ == "__main__":
 # 测试雅可比矩阵
     print("\n测试雅可比矩阵:")
     angles = [theta1, theta2]
-    J = jacobian_3d(angles)
+    J = true_jacobian(angles)
     print("雅可比矩阵:\n", J)

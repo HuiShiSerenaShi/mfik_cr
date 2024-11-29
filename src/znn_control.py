@@ -21,7 +21,4 @@ def znn2_update(jacobian, jacobian_dot, angles_dot, angles_dotdot, actual_accele
     jacobian_dot = term3 @ angles_dot.T + jacobian_dot @ G_mat
     return jacobian_dot
 
-# 离散更新公式
-def discrete_update(current, derivative, dt):
-    return current + dt * derivative
 
